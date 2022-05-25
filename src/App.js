@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import Register from './components/Register/Register';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showRegister, setShowRegister] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
@@ -27,11 +30,21 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const showRegisterHandler = () => {
+    setShowRegister(true)
+    setShowLogin(false)
+  }
+  const showLoginHandler = () => {
+    setShowLogin(true)
+    setShowRegister(false)
+  }
+
   return (
     <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} onRegisterClick={showRegisterHandler} onLoginClick={showLoginHandler} />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {(!isLoggedIn && showRegister) && <Register />}
+        {(!isLoggedIn && showLogin) && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}
       </main>
     </React.Fragment>

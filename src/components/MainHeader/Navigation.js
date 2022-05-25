@@ -21,6 +21,16 @@ const Navigation = (props) => {
             <button onClick={props.onLogout}>Logout</button>
           </li>
         )}
+        {!props.isLoggedIn && (
+          <li>
+            <button onClick={props.onRegisterClick}>Register</button>
+          </li>
+        )}
+        {!props.isLoggedIn && (
+          <li>
+            <button onClick={props.onLoginClick}>Login</button>
+          </li>
+        )}
       </ul>
     </nav>
   );
